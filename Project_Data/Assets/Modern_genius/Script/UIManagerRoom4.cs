@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using DG.Tweening;
 
 /// <summary>
 /// This script is used to control user interface of the game suach as game panel, animation, user input and warning
@@ -11,97 +12,137 @@ using System;
 public class UIManagerRoom4 : MonoBehaviour
 {
     public GameData gameData;
-    
-    [Header("This area is for all hint and puzzle panel")]
-    public Animator clue1;
-    public Animator clue2;
-    public Animator clue3;
-   
+
+    public Image backgroundImage;
+    public Sprite unlockSprite;
+
+    [Header("This area is for button clue")]
+    public Button cluePuzzleBtn1;
+    public Button cluePuzzleBtn2;
+    public Button clueBtn1;
+
+    [Header("This area is for puzzle clue panel")]
+    public RectTransform puzzleClue1;
+    public RectTransform puzzleClue2;
+
+    [Header("This area is for non puzzle clue panel")]
+    public RectTransform clue1;
+
     [Header("This area is for all correct panel")]
-    public Animator correct1;
-    public Animator correct2;
-    
+    public RectTransform answerPanel1;
+    public RectTransform answerPanel2;
 
     [Header("This area is for the puzzle input")]
-    public InputField puzzleInput;
+    public InputField puzzleInput1;
     public Text notificationDisplay;
     public InputField puzzleInput2;
     public Text notificationDisplay2;
-    
+
     [Header("This part is for the puzzle answer, make sure you add the answer for your puzzle")]
-    public string puzzleAnswer;
-    public string[] puzzle2Answers;
-    
+    public string[] puzzleAnswer1;
+    public string[] puzzleAnswer2;
+
     [Header("Check this variable if this is the last puzzle room in the game")]
     public bool lastRoom = false;
 
     private bool clue1On = false;
     private bool clue2On = false;
     private bool clue3On = false;
+    private bool clue4On = false;
+    private bool clue5On = false;
+
+    //new system here
+    public float tweenDelay = 1f;
+    public List<RectTransform> openWindow = new List<RectTransform>();
 
     // Start is called before the first frame update
     void Start()
     {
         // Find game data object in the begining of the scene
         gameData = GameObject.FindGameObjectWithTag("data").GetComponent<GameData>();
+
+        cluePuzzleBtn1.onClick.AddListener(() => ClueWithPuzzle1(puzzleClue1));
+        cluePuzzleBtn2.onClick.AddListener(() => ClueWithPuzzle2(puzzleClue2));
+        clueBtn1.onClick.AddListener(() => NonPuzzleClue(clue1));
+
+        CheckButton();
+    }
+
+    void CheckButton()
+    {
+        bool isComplete = GameData.instance.room4PuzzleOpen[0];
+
+        if (isComplete)
+        {
+            backgroundImage.sprite = unlockSprite;
+
+            cluePuzzleBtn2.GetComponent<Image>().color = Color.white;
+            cluePuzzleBtn2.interactable = true;
+        }
     }
 
     // This is a fungtion to check puzzle 1 answer, if correct a new clue will be open and player can advance to the new map
     public void CheckingAnswer1(bool canAdvance)
     {
-        
-        if (puzzleInput.text.Equals( puzzleAnswer, StringComparison.OrdinalIgnoreCase))
+        var a = 0;
+
+        for (int i = 0; i < puzzleAnswer1.Length; i++)
         {
-            AnswerCorrect(canAdvance);
+            if (puzzleInput1.text.Equals(puzzleAnswer1[i], StringComparison.OrdinalIgnoreCase))
+            {
+                a++;
+                break;
+            }
+        }
+
+        if (a > 0)
+        {
             SwitchCorrect1(true);
+            AnswerCorrect(canAdvance);
+
+            backgroundImage.sprite = unlockSprite;
+
+            cluePuzzleBtn2.GetComponent<Image>().color = Color.white;
+            cluePuzzleBtn2.interactable = true;
+
             GameData.instance.room4PuzzleOpen[0] = true;
         }
         else
         {
-            StartCoroutine(AnswerFalse());
+            StartCoroutine(AnswerFalse1());
         }
-        
+
     }
 
     // This is a fungtion to check puzzle 2 answer, if correct a new clue will be open and player can advance to the new map
     public void CheckingAnswer2(bool canAdvance)
     {
-        bool isComplete = GameData.instance.room4PuzzleOpen[1];
+        var a = 0;
 
-        if (isComplete)
+        for (int i = 0; i < puzzleAnswer2.Length; i++)
+        {
+            if (puzzleInput2.text.Equals(puzzleAnswer2[i], StringComparison.OrdinalIgnoreCase))
+            {
+                a++;
+                break;
+            }
+        }
+
+        if (a > 0)
         {
             SwitchCorrect2(true);
+            AnswerCorrect(canAdvance);
+            GameData.instance.room4PuzzleOpen[1] = true;
         }
         else
         {
-            var a = 0;
-
-            for (int i = 0; i < puzzle2Answers.Length; i++)
-            {
-                if (puzzleInput2.text.Equals( puzzle2Answers[i],StringComparison.OrdinalIgnoreCase))
-                {
-                    a++;
-                    break;
-                }
-            }
-
-            if (a > 0)
-            {
-                AnswerCorrect(canAdvance);
-                SwitchCorrect2(true);
-                GameData.instance.room4PuzzleOpen[1] = true;
-            }
-            else
-            {
-                StartCoroutine(AnswerFalse2());
-            }
+            StartCoroutine(AnswerFalse2());
         }
-        
+
     }
 
-   
     // This is a fungtion to activate a clue window 1
-    public void SwitchClue1(bool isActive)
+    public void ClueWithPuzzle1(RectTransform panel)
     {
         bool isComplete = GameData.instance.room4PuzzleOpen[0];
 
@@ -111,44 +152,32 @@ public class UIManagerRoom4 : MonoBehaviour
         }
         else
         {
-            if (isActive)
-            {
-                clue1.Play("Window Enter");
-                clue1On = true;
-            }
-            else
-            {
-                clue1.Play("Window Exit");
-            }
+            ClosePanel();
+            OpenPanel(panel);
         }
     }
 
     // This is a fungtion to activate a clue window 2
-    public void SwitchClue2(bool isActive)
+    public void ClueWithPuzzle2(RectTransform panel)
     {
-        if (isActive)
+        bool isComplete = GameData.instance.room4PuzzleOpen[1];
+
+        if (isComplete)
         {
-            clue2.Play("Window Enter");
-            clue2On = true;
+            SwitchCorrect2(true);
         }
         else
         {
-            clue2.Play("Window Exit");
+            ClosePanel();
+            OpenPanel(panel);
         }
     }
 
     // This is a fungtion to activate a clue window 3
-    public void SwitchClue3(bool isActive)
+    public void NonPuzzleClue(RectTransform panel)
     {
-        if (isActive)
-        {
-            clue3.Play("Window Enter");
-            
-        }
-        else
-        {
-            clue3.Play("Window Exit");
-        }
+        ClosePanel();
+        OpenPanel(panel);
     }
 
     //This function is used to increase the game progression data and close all clue window the is open.
@@ -164,17 +193,10 @@ public class UIManagerRoom4 : MonoBehaviour
         if (clue1On)
         {
             clue1On = false;
-            clue1.Play("Window Exit");
         }
         else if (clue2On)
         {
             clue2On = false;
-            clue2.Play("Window Exit");
-        }
-        else if (clue3On)
-        {
-            clue3On = false;
-            clue3.Play("Window Exit");
         }
 
     }
@@ -188,7 +210,7 @@ public class UIManagerRoom4 : MonoBehaviour
     }
 
     //This coroutine is used to add a message for the player when player put a wrong answer in puzzle 1 input
-    IEnumerator AnswerFalse()
+    IEnumerator AnswerFalse1()
     {
         string prev = notificationDisplay.text;
 
@@ -213,17 +235,18 @@ public class UIManagerRoom4 : MonoBehaviour
         notificationDisplay2.color = Color.black;
     }
 
-   
     // This function is used to activate a clue when puzzle 1 answer is correct
     public void SwitchCorrect1(bool isActive)
     {
         if (isActive)
         {
-            correct1.Play("Window Enter");
+            ClosePanel();
+            OpenPanel(answerPanel1);
+            clue1On = true;
         }
         else
         {
-            correct1.Play("Window Exit");
+            ClosePanel();
         }
     }
 
@@ -232,14 +255,29 @@ public class UIManagerRoom4 : MonoBehaviour
     {
         if (isActive)
         {
-            correct1.Play("Window Exit");
-            correct2.Play("Window Enter");
+            ClosePanel();
+            OpenPanel(answerPanel2);
+            clue2On = true;
         }
         else
         {
-            correct2.Play("Window Exit");
+            ClosePanel();
         }
     }
 
-    
+    void OpenPanel(RectTransform rt)
+    {
+        rt.DOAnchorPos(Vector2.zero, tweenDelay);
+        openWindow.Add(rt);
+    }
+
+    public void ClosePanel()
+    {
+        for (int i = 0; i < openWindow.Count; i++)
+        {
+            openWindow[i].DOAnchorPos(new Vector2(0, 2000), tweenDelay);
+        }
+
+        openWindow.Clear();
+    }
 }

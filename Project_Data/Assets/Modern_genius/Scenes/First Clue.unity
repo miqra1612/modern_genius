@@ -242,7 +242,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1.8
+  m_PixelsPerUnitMultiplier: 1.4
 --- !u!222 &6752977
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -960,8 +960,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2090244095}
   m_HandleRect: {fileID: 2090244094}
   m_Direction: 2
-  m_Value: 1.0000004
-  m_Size: 0.74774677
+  m_Value: 0.99999964
+  m_Size: 0.7475094
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1137,7 +1137,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1550587441}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: button frame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1516,7 +1516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.9963788, b: 0, a: 1}
+  m_Color: {r: 0.6455155, g: 0.9622642, b: 0.33588466, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1801,7 +1801,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 1.4
 --- !u!222 &2051030671
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2100,7 +2100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.9963788, b: 0, a: 1}
+  m_Color: {r: 0.6455155, g: 0.9622642, b: 0.33588466, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:

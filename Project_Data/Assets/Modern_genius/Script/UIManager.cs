@@ -11,19 +11,32 @@ using DG.Tweening;
 public class UIManager : MonoBehaviour
 {
     public GameData gameData;
+    
+    [Header("This area is for button clue")]
+    public Button cluePuzzleBtn1;
+    public Button cluePuzzleBtn2;
+    public Button clueBtn1;
+    public Button clueBtn2;
+    public Button clueBtn3;
+    public Button clueBtn4;
+    public Button clueBtn5;
+    public Button clueBtn6;
 
-   
-    [Header("This area is for all hint and puzzle panel")]
-    public Animator clue1;
-    public Animator clue2;
-    public Animator clue3;
-    public Animator clue4;
+    [Header("This area is for puzzle clue panel")]
+    public RectTransform puzzleClue1;
+    public RectTransform puzzleClue2;
 
-   
+    [Header("This area is for non puzzle clue panel")]
+    public RectTransform clue1;
+    public RectTransform clue2;
+    public RectTransform clue3;
+    public RectTransform clue4;
+    public RectTransform clue5;
+    public RectTransform clue6;
+
     [Header("This area is for all correct panel")]
-    public Animator correct1;
-    public Animator correct2;
-   
+    public RectTransform answerPanel1;
+    public RectTransform answerPanel2;
 
     [Header("This area is for the puzzle input")]
     public InputField puzzleInput;
@@ -39,6 +52,7 @@ public class UIManager : MonoBehaviour
     [Header("Check this variable if this is the last puzzle room in the game")]
     public bool lastRoom = false;
 
+    //this is to mark the pauzzle that already solve so whenever player reopen the puzzle the answer menu is open directly
     private bool clue1On = false;
     private bool clue2On = false;
     private bool clue3On = false;
@@ -46,22 +60,30 @@ public class UIManager : MonoBehaviour
     private bool clue5On = false;
 
     //new system here
-
+    public float tweenDelay = 1f;
     public List<RectTransform> openWindow = new List<RectTransform>();
 
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         // Find game data object in the begining of the scene
         gameData = GameObject.FindGameObjectWithTag("data").GetComponent<GameData>();
     }
 
-    // Update is called once per frame
-    void Update()
+    // Start is called before the first frame update
+    void Start()
     {
-        
-    }
+       
 
+        cluePuzzleBtn1.onClick.AddListener(() => ClueWithPuzzle1(puzzleClue1));
+        cluePuzzleBtn2.onClick.AddListener(() => ClueWithPuzzle2(puzzleClue2));
+        clueBtn1.onClick.AddListener(() => NonPuzzleClue(clue1));
+        clueBtn2.onClick.AddListener(() => NonPuzzleClue(clue2));
+        clueBtn3.onClick.AddListener(() => NonPuzzleClue(clue3));
+        clueBtn4.onClick.AddListener(() => NonPuzzleClue(clue4));
+        clueBtn5.onClick.AddListener(() => NonPuzzleClue(clue5));
+        clueBtn6.onClick.AddListener(() => NonPuzzleClue(clue6));
+    }
+    
     // This is a fungtion to check puzzle 1 answer, if correct a new clue will be open and player can advance to the new map
     public void CheckingAnswer1(bool canAdvance)
     {
@@ -97,6 +119,7 @@ public class UIManager : MonoBehaviour
 
             for (int i = 0; i < puzzle2Answers.Length; i++)
             {
+           
                 if (puzzleInput2.text.Equals( puzzle2Answers[i],StringComparison.OrdinalIgnoreCase))
                 {
                     a++;
@@ -118,20 +141,7 @@ public class UIManager : MonoBehaviour
     }
     
     // This is a fungtion to activate a clue window 1
-    public void SwitchClue1(bool isActive)
-    {
-        if (isActive)
-        {
-            clue1.Play("Window Enter");
-        }
-        else
-        {
-            clue1.Play("Window Exit");
-        }
-    }
-
-    // This is a fungtion to activate a clue window 2
-    public void SwitchClue2(bool isActive)
+    public void ClueWithPuzzle1(RectTransform panel)
     {
         bool isComplete = GameData.instance.room1PuzzleOpen[0];
 
@@ -141,54 +151,35 @@ public class UIManager : MonoBehaviour
         }
         else
         {
-            if (isActive)
-            {
-                clue2.Play("Window Enter");
-            }
-            else
-            {
-                clue2.Play("Window Exit");
-            }
+            ClosePanel();
+            OpenPanel(panel);
         }
     }
 
-    // This is a fungtion to activate a clue window 3
-    public void SwitchClue3(bool isActive)
-    {
-        if (isActive)
-        {
-            clue3.Play("Window Enter");
-        }
-        else
-        {
-            clue3.Play("Window Exit");
-        }
-    }
-
-    // This is a fungtion to activate a clue window 4
-    public void SwitchClue4(bool isActive)
+    // This is a fungtion to activate a clue window 2
+    public void ClueWithPuzzle2(RectTransform panel)
     {
         bool isComplete = GameData.instance.room1PuzzleOpen[1];
 
         if (isComplete)
         {
             SwitchCorrect2(true);
-            Debug.Log("aa");
         }
         else
         {
-            if (isActive)
-            {
-                clue4.Play("Window Enter");
-            }
-            else
-            {
-                clue4.Play("Window Exit");
-            }
+            ClosePanel();
+            OpenPanel(panel);
         }
     }
 
-    //This function is used to increase the game progression data and close all clue window the is open.
+    // This is a fungtion to activate a clue window 3
+    public void NonPuzzleClue(RectTransform panel)
+    {
+        ClosePanel();
+        OpenPanel(panel);
+    }
+    
+    //This function is used to increase the game progression data and close all clue window that is open.
     //It is also serve to check if the last puzzle already solve or not, if yes then the game finish time will be calculated
     public void AnswerCorrect(bool continueMap)
     {
@@ -196,18 +187,16 @@ public class UIManager : MonoBehaviour
         {
             gameData.gamePhase++;
         }
-        
-        if (clue2On)
+
+        if (clue1On)
         {
-            clue2On = false;
-            clue2.Play("Window Exit");
+            clue1On = false;
         }
-        else if (clue4On)
+        else if (clue2On)
         {
             clue4On = false;
-            clue4.Play("Window Exit");
         }
-        
+
     }
 
     public void CalculateFinishTime()
@@ -249,12 +238,13 @@ public class UIManager : MonoBehaviour
     {
         if (isActive)
         {
-            correct1.Play("Window Enter");
-            clue2On = true;
+            ClosePanel();
+            OpenPanel(answerPanel1);
+            clue1On = true;
         }
         else
         {
-            correct1.Play("Window Exit");
+            ClosePanel();
         }
         
     }
@@ -264,65 +254,29 @@ public class UIManager : MonoBehaviour
     {
         if (isActive)
         {
-            correct2.Play("Window Enter");
-            clue4On = true;
+            ClosePanel();
+            OpenPanel(answerPanel2);
+            clue2On = true;
         }
         else
         {
-            correct2.Play("Window Exit");
+            ClosePanel();
         }
     }
-
-    //new system here
-
-    public float tweenDelay = 1f;
-
-    public void OpenPanel(RectTransform rt)
+    
+    void OpenPanel(RectTransform rt)
     {
-        PanelCheck(rt.name, rt);
+        rt.DOAnchorPos(Vector2.zero, tweenDelay);
+        openWindow.Add(rt);
     }
 
     public void ClosePanel()
     {
-        openWindow[0].DOAnchorPos(new Vector2(0, 2000), tweenDelay);
+        for(int i = 0; i < openWindow.Count; i++)
+        {
+            openWindow[i].DOAnchorPos(new Vector2(0, 2000), tweenDelay);
+        }
+       
         openWindow.Clear();
-    }
-
-    public List<RectTransform> panelList = new List<RectTransform>();
-
-    void PanelCheck(string panelName, RectTransform rt)
-    {
-        int itemNum = 0;
-
-        for(int i = 0; i < panelList.Count; i++)
-        {
-            
-            var newName = panelName.Replace("Panel"," ");
-            Debug.Log(newName);
-
-            if (panelList[i].name.Contains(newName))
-            {
-                panelList[i].DOAnchorPos(Vector2.zero, tweenDelay);
-                openWindow.Add(rt);
-                break;
-            }
-            else
-            {
-                itemNum++;
-            }
-        }
-
-        if(itemNum >= panelList.Count)
-        {
-            rt.DOAnchorPos(Vector2.zero, tweenDelay);
-            openWindow.Add(rt);
-        }
-    }
-    
-    public void AdditionalPanel(RectTransform rt)
-    {
-        panelList.Add(rt);
-        ClosePanel();
-        PanelCheck(rt.name, rt);
     }
 }
