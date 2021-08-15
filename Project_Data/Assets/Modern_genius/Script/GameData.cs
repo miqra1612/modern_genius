@@ -43,13 +43,13 @@ public class GameData : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        if(instance == null) instance = this;
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(gameObject);
         
         // read the begining time of the game
         startTime = DateTime.Now.ToString();
