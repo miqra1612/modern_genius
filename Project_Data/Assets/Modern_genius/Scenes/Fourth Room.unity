@@ -489,11 +489,11 @@ RectTransform:
   m_Father: {fileID: 1185299228}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 250}
-  m_SizeDelta: {x: 1713.6035, y: 500.00012}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -50}
+  m_SizeDelta: {x: 1713.6035, y: 99.135925}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &182209624
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,7 +513,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: After entering correct password a door to a new room was open.
+  m_text: A new location was open.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ecdc39924bbee72429c842cb75963097, type: 2}
   m_sharedMaterial: {fileID: -8428150210867438615, guid: ecdc39924bbee72429c842cb75963097,
@@ -4044,7 +4044,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1187339132
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4059,11 +4059,11 @@ RectTransform:
   m_Father: {fileID: 1185299228}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -10}
-  m_SizeDelta: {x: 1159, y: 846}
-  m_Pivot: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -50}
+  m_SizeDelta: {x: 1603.0723, y: 901.728}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1187339133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4083,7 +4083,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e4677100501d821408a5686b74d6fcee, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4e5b7b5602d35c245b74f4aeb7c6d82c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7027,6 +7027,7 @@ MonoBehaviour:
   notificationDisplay2: {fileID: 782510305}
   puzzleAnswer1:
   - Alpha Zeta Eta Delta
+  - AlphaZetaEtaDelta
   puzzleAnswer2:
   - TESTER
   lastRoom: 0
