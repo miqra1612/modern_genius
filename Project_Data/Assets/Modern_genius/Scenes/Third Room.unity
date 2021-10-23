@@ -1073,11 +1073,11 @@ RectTransform:
   m_Father: {fileID: 957329997}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 250}
-  m_SizeDelta: {x: 1713.6035, y: 500.00012}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -50}
+  m_SizeDelta: {x: 1713.6035, y: 137.6908}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &268595269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1097,7 +1097,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: After entering correct password a door to a new room was open.
+  m_text: A new location was open.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ecdc39924bbee72429c842cb75963097, type: 2}
   m_sharedMaterial: {fileID: -8428150210867438615, guid: ecdc39924bbee72429c842cb75963097,
@@ -1985,8 +1985,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Electrical box\r\n\n\"If you flip the right switches, the security system
     will temporarily shut down and you can access the Control Room. Check the security
-    system servers. We need to turn off the key security nods. All you need to do
-    is to find them.\n\nTurn the nods of in descending order.\n\nThe previous combination
+    system servers. We need to turn off the key security knobs. All you need to do
+    is to find them.\n\nTurn the knobs of in ascending order.\n\nThe previous combination
     was 2 3 11 12 16. But it changed, of course.\"\r"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ecdc39924bbee72429c842cb75963097, type: 2}
@@ -3968,7 +3968,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &975601272
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3983,11 +3983,11 @@ RectTransform:
   m_Father: {fileID: 957329997}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -10}
-  m_SizeDelta: {x: 1159, y: 846}
-  m_Pivot: {x: 0.5, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -50}
+  m_SizeDelta: {x: 1645.7451, y: 925.7317}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &975601273
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4007,7 +4007,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e4677100501d821408a5686b74d6fcee, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 76a3aecb6c02c2a42b9b2317d9d08f4e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6053,7 +6053,7 @@ MonoBehaviour:
   m_Text: '210
 
 
-    EROCH
+    EPOCH
 
 
     3 8 9 11 14
@@ -9394,7 +9394,7 @@ MonoBehaviour:
   puzzleAnswer1:
   - 210
   puzzleAnswer2:
-  - EROCH
+  - EPOCH
   puzzleAnswer3:
   - 3891114
   - 3 8 9 11 14
